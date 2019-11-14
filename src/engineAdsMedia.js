@@ -1,10 +1,10 @@
 const https = require('https')
+const guid = require('./guidGenerator')
 
 /**
  * 
- * @param {url=send} urlSend ini itu
- * @param {*} urlCheckBalance 
- * @param {*} apiKey 
+ * @param {string} domain its your specific domain that provided by adsmedia
+ * @param {string} apiKey your apikey from adsmedia
  */
 function engineAdsmedia(domain,apiKey){
    
@@ -26,10 +26,15 @@ function engineAdsmedia(domain,apiKey){
           const req = https.request(options,(response)=>{
             response.on('data', (d) => {
                 var data= JSON.parse(d)
-                var balance = data.balance_respon[0].balance/2
-                msg.status = "success"
-                msg.remaining = "data.credit"
-                resolve(balance)
+                if(data.balance_respon[0].globalstatustext==="Check Balance Limit"){
+                  msg.message = "check balance limit"
+                  reject(msg)
+                }else{
+                  var balance = data.balance_respon[0].balance
+                  msg.status = "success"
+                  msg.remaining = Math.ceil(Number(balance)/500)
+                  resolve(msg)
+                }
             })
           })
           req.on('error', (error) => {
@@ -41,6 +46,11 @@ function engineAdsmedia(domain,apiKey){
       })
     }
     
+    /**
+     * 
+     * @param {string} number the phone number of your target (person who receive otp)
+     * @param {string} code the otp secret code for customer
+     */
     this.sendOtp = function (number,code){
       const data = JSON.stringify({
         'apikey':apiKey,
@@ -64,7 +74,8 @@ function engineAdsmedia(domain,apiKey){
           const req = https.request(options,(response)=>{
               response.on('data', (d) => {
                   var data= JSON.parse(d)
-                  if(data.globalstatustext=="Success"){
+                   console.log('d',data)
+                  if(data.sending_respon[0].globalstatustext=="Success"){
                     msg.status = "success"
                     msg.requestId = guid.guid()
                     resolve(msg)                
