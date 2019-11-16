@@ -22,7 +22,7 @@ function engineZenziva(userkey,passkey){
               response.on('data', (d) => {
                 var data= JSON.parse(d)
                 msg.status = "success"
-                msg.remaining = data.credit
+                msg.remaining = Number(data.credit)
                 resolve(msg)
               })
           })
