@@ -1,6 +1,6 @@
 {
   "name": "hepi-otp",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "for handling otp with multiple engine",
   "main": "src/index.js",
   "scripts": {
