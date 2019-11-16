@@ -1,3 +1,4 @@
+var EngineNexmo = require('../src/engineNexmo').engineNexmo
 var hepiOtp = function(){
   this.engine = ""
 }
@@ -9,13 +10,25 @@ hepiOtp.prototype = {
   checkBalance:function(){
     return this.engine.checkBalance()
   },
+  /**
+   * 
+   * @param {string} number the phone number who receipt your secret code.
+   * @param {string} code the secret code that you send to user. For nexmo engine, the secret code will be generated automatically by engine.
+   * @returns {Promise} response 
+   */
   sendOtp:function(number,code){
+    /**
+     * d
+     */
     return this.engine.sendOtp(number,code)
+  },
+  verifyOtp:function(otpcode,requestid){
+    if(this.engine instanceof EngineNexmo ){
+      return this.engine.verify(otpcode,requestid)
+    }else{
+      return Promise.reject("it is not nexmo engine!")
+    }
   }
 }
 
-
-exports.printMsg = function() {
-    return 'abcd'
-  }
 exports.hepiOtp = hepiOtp

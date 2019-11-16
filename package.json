@@ -11,5 +11,8 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.2.2"
+  },
+  "dependencies": {
+    "nexmo": "2.5.1"
   }
 }
