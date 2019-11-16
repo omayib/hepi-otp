@@ -51,11 +51,11 @@ function engineZenziva(userkey,passkey){
         }
       }
       var msg={status:'failed'}
-      if(code==undefined){
-        msg.message = "masukkan code otp"
-        reject(msg)
-      }
       return new Promise((resolve,reject)=>{
+          if(code==undefined){
+            msg.message = "masukkan code otp"
+            reject(msg)
+          }
           const req = https.request(options,(response)=>{
               response.on('data', (d) => {
                 console.log('d',JSON.parse(d))
