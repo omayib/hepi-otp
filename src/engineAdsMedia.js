@@ -74,7 +74,6 @@ function engineAdsmedia(domain,apiKey){
           const req = https.request(options,(response)=>{
               response.on('data', (d) => {
                   var data= JSON.parse(d)
-                   console.log('d',data)
                   if(data.sending_respon[0].globalstatustext=="Success"){
                     msg.status = "success"
                     msg.requestId = guid.guid()
