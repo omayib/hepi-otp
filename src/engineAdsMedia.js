@@ -71,6 +71,10 @@ function engineAdsmedia(domain,apiKey){
       }
       var msg={status:'failed'}
       return new Promise((resolve,reject)=>{
+          if(code==undefined){
+            msg.message = "masukkan code otp"
+            reject(msg)
+          }
           const req = https.request(options,(response)=>{
               response.on('data', (d) => {
                   var data= JSON.parse(d)
@@ -96,3 +100,4 @@ function engineAdsmedia(domain,apiKey){
   }
 
 exports.engineAdsmedia = engineAdsmedia
+module.exports.engeA = engineAdsmedia

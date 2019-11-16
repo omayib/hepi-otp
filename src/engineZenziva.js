@@ -51,13 +51,20 @@ function engineZenziva(userkey,passkey){
         }
       }
       var msg={status:'failed'}
+      if(code==undefined){
+        msg.message = "masukkan code otp"
+        reject(msg)
+      }
       return new Promise((resolve,reject)=>{
           const req = https.request(options,(response)=>{
               response.on('data', (d) => {
+                console.log('d',JSON.parse(d))
                 var data= JSON.parse(d)
                 if(data.text=="Insufficient credit"){
-                    msg.status = "failed"
                     msg.message = "ada kendala pada layanan otp"
+                    reject(msg)
+                }else if(String(data.text).includes('Parameter')){
+                    msg.message = data.text
                     reject(msg)
                 }else{
                   msg.status = "success"

@@ -1,4 +1,7 @@
 var EngineNexmo = require('../src/engineNexmo').engineNexmo
+var EngineAdsmedia = require('../src/engineAdsMedia').engineAdsmedia
+var EngineZenziva = require('../src/engineZenziva').engineZenziva
+
 var hepiOtp = function(){
   this.engine = ""
 }
@@ -32,3 +35,6 @@ hepiOtp.prototype = {
 }
 
 exports.hepiOtp = hepiOtp
+exports.EngineAdsmedia = EngineAdsmedia
+exports.EngineZenziva = EngineZenziva
+exports.EngineNexmo = EngineNexmo
